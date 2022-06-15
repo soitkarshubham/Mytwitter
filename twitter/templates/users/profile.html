@@ -1,8 +1,14 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+{% block content %}
 <div class="container">
     <h3 class="white-important">
         Change profile data
     </h3>
-    <form class="col-6 no-padding" method="POST" enctype="multipart/form-data">
+    <form class="col-6 no-padding" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
             {{ uform | crispy }}
@@ -12,4 +18,9 @@
             <button class="btn btn-outline-primary" type="submit">Change data</button>
         </div>
     </form>
+    {% if img_obj %}
+  <h3>Succesfully uploaded : {{img_obj.title}}</h3>
+  <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+{% endif %}
 </div>
+{% endblock %}
