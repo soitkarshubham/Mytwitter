@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}
+<title>Home</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-md-3 pr-4 dont-move">
+        <a href="/"> <h2><img class="img-fluid" width="60" src="{% static 'blog/logo.png' %}">BlogRoom</h2></a><br>
+        <div class="profile-section">
+        <h3 class="white-important p-2">
+            Profile
+        </h3>
+        <article class="media content-section" style="height: 140px; width: 100%">
+            {%  if user_profile != None %}
+                <div class="mt-2 d-flex full-width align-items-center">
+                    <img
+                       class="rounded-circle mr-3 img-fluid"
+                       style="width: 90px; height: 90px;"
+                       src="{{ user_profile.profile.image.url }}">
+                    <div>
+                        <h4 style="text-align: left"
+                                class="white-important">
+                            {{ user_profile.username }}
+                        </h4>
+                        <h6 style="text-align: left"
+                                class="email-profile">
+                            {{ user.email }}
+                        </h6>
+
+                    </div>
+                </div>
+            {%  else %}
+                <div class="mt-2 d-flex full-width align-items-center">
+                    <img
+                       class="rounded-circle mr-3"
+                       style="width: 90px; height: 90px;"
+                       src="{{  user.image.url }}">
+                    <div>
+                        <h4 style="text-align: left"
+                                class="white-important">
+                         Hi   {{ user.username }}
+                        </h4>
+                        <h6 style="text-align: left"
+                                class="email-profile">
+                            {{ user.email }}
+                        </h6>
+                    </div>
+                </div>
+            {%  endif %}
+        </article>
+
+{% endblock %}

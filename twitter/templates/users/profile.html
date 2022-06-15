@@ -11,16 +11,15 @@
     <form class="col-6 no-padding" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
-            {{ uform | crispy }}
             {{ pform | crispy }}
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-outline-primary" type="submit">Change data</button>
+            <button class="btn btn-outline-primary" type="submit">Update data</button>
         </div>
     </form>
-    {% if img_obj %}
+    <!-- {% if img_obj %}
   <h3>Succesfully uploaded : {{img_obj.title}}</h3>
   <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
 {% endif %}
-</div>
+</div> -->
 {% endblock %}

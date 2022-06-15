@@ -30,18 +30,29 @@ def logoutview(request):
     logout(request)
     return redirect ('login')
 
+# def profile(request):
+#     if request.method == 'POST':
+#         uform = UserUpdateForm(request.POST, instance=request.user)
+#         pform = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
+
+#         if uform.is_valid() and pform.is_valid():
+#             uform.save()
+#             pform.save()
+#             print('------------')
+#             #messages.success(request, f'Account has been updated.')
+#             return redirect('home')
+#     else:
+#         uform = UserUpdateForm(instance=request.user)
+#         pform = ProfileUpdateForm(instance=request.user)
+
+#     return render(request, 'users/profile.html', {'uform': uform, 'pform': pform})
+
 def profile(request):
+    pform = ProfileUpdateForm()
     if request.method == 'POST':
-        uform = UserUpdateForm(request.POST, instance=request.user)
-        pform = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
-
-        if uform.is_valid() and pform.is_valid():
-            uform.save()
+        pform = ProfileUpdateForm(request.POST, request.FILES)
+        if pform.is_valid():
+            pform.instance.user = request.user
             pform.save()
-            #messages.success(request, f'Account has been updated.')
-            return redirect('update-profile')
-    else:
-        uform = UserUpdateForm(instance=request.user)
-        pform = ProfileUpdateForm(instance=request.user)
-
-    return render(request, 'users/profile.html', {'uform': uform, 'pform': pform})
+            return redirect('home')
+    return render(request,'users/profile.html',{'pform':pform})
