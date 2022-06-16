@@ -9,8 +9,7 @@ PAGINATION_COUNT = 3
 
 
 def homeview(request):
-    posts = Post.objects.all()
-    return render(request, 'blog/home.html',{'posts':posts})
+    return render(request,'blog/home.html')
     
 class PostListView(ListView):
     model = Post

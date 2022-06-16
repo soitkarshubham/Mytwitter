@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import Profile
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm, ProfileUpdateForm
+from django.contrib import messages
 
 def registeruser(request):
     '''registers user'''
@@ -21,38 +22,29 @@ def loginview(request):
         un = request.POST.get('un')
         ps = request.POST.get('ps')
         user = authenticate(username = un, password = ps)
+        print('-------', user)
         if user is not None:
             login(request, user)
-            return redirect('update-profile')
+            return redirect('home')
     return render(request,'users/login.html')
 
 def logoutview(request):
     logout(request)
     return redirect ('login')
 
-# def profile(request):
-#     if request.method == 'POST':
-#         uform = UserUpdateForm(request.POST, instance=request.user)
-#         pform = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
-
-#         if uform.is_valid() and pform.is_valid():
-#             uform.save()
-#             pform.save()
-#             print('------------')
-#             #messages.success(request, f'Account has been updated.')
-#             return redirect('home')
-#     else:
-#         uform = UserUpdateForm(instance=request.user)
-#         pform = ProfileUpdateForm(instance=request.user)
-
-#     return render(request, 'users/profile.html', {'uform': uform, 'pform': pform})
-
-def profile(request):
-    pform = ProfileUpdateForm()
+def profile_update(request):
+    pform = ProfileUpdateForm(instance= request.user.profile)
     if request.method == 'POST':
-        pform = ProfileUpdateForm(request.POST, request.FILES)
+        pform = ProfileUpdateForm(request.POST, request.FILES, instance = request.user.profile)
         if pform.is_valid():
-            pform.instance.user = request.user
+            print('555555555555')
             pform.save()
+            # try:
+            #     profile =Profile.objects.create(user=request.user)    We can use this to create profile instance but instead use signals
+            # except:
+            #     pass
             return redirect('home')
-    return render(request,'users/profile.html',{'pform':pform})
+    return render(request,'users/update_profile.html',{'pform':pform} )
+
+
+

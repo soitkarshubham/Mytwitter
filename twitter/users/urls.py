@@ -3,7 +3,7 @@ from .import views
 
 urlpatterns = [
     path('register/',views.registeruser, name = 'register'),
-    path('profile/',views.profile, name = 'update-profile'),
+    path('profile-update/',views.profile_update, name = 'profile-update'),
     path('login/',views.loginview, name = 'login'),
     path('logout/',views.logoutview, name = 'logout')
 ]
