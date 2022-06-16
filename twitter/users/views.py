@@ -37,7 +37,6 @@ def profile_update(request):
     if request.method == 'POST':
         pform = ProfileUpdateForm(request.POST, request.FILES, instance = request.user.profile)
         if pform.is_valid():
-            print('555555555555')
             pform.save()
             # try:
             #     profile =Profile.objects.create(user=request.user)    We can use this to create profile instance but instead use signals
